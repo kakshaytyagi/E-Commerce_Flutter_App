@@ -115,14 +115,14 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         children: [
           Text(
             formData.isMandatory(label) ? '$label*' : label,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           ),
           TextField(
             controller: controller,
             onChanged: (value) => _updateFormData(label, value),
             keyboardType: keyboardType,
             inputFormatters: inputFormatters,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
             ),
           )
