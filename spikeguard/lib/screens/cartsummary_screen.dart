@@ -118,8 +118,14 @@ class _CartSummaryScreenState extends State<CartSummaryScreen> {
       child: ElevatedButton(
         onPressed: isAddressSelected && isPaymentOptionSelected
             ? () {
-                // TODO: Implement logic to proceed with the purchase
-              }
+              if (selectedPaymentOption == 'Cash on Delivery') {
+                  // Handle Cash on Delivery logic
+                  _proceedWithCashOnDelivery();
+                } else {
+                  // Handle other payment options
+                  _proceedWithOtherPayment();
+                }
+            }
             : null,
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white, backgroundColor: Colors.green,
@@ -351,4 +357,21 @@ class _CartSummaryScreenState extends State<CartSummaryScreen> {
     }
     return total.toStringAsFixed(2);
   }
+}
+
+
+
+void _proceedWithCashOnDelivery() {
+  // Implement logic for Cash on Delivery
+  // For example, show a confirmation dialog or navigate to a success screen
+}
+
+void _proceedWithOtherPayment() {
+  // Implement logic for other payment options
+  // For example, handle the selected payment app and proceed accordingly
+  // if (selectedPaymentOption == 'Other UPI Apps' &&
+  //     selectedPaymentApp.isNotEmpty) {
+  //   // Implement logic for other UPI apps
+  //   // You can show a confirmation dialog or navigate to a payment screen
+  // }
 }
