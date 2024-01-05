@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "533651256018",
+    "project_id": "spikeguard-3491a",
+    "storage_bucket": "spikeguard-3491a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533651256018:android:fb80fc3e13c511c408f30b",
+        "android_client_info": {
+          "package_name": "com.example.spikeguard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuEk5N1_cbqVKRWx3Qj1nvpJcoWTNUc7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

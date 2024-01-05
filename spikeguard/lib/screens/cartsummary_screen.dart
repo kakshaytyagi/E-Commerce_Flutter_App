@@ -108,43 +108,7 @@ class _CartSummaryScreenState extends State<CartSummaryScreen> {
     );
   }
 
-  Widget _buildProceedButton() {
-    bool isAddressSelected = selectedAddress != null;
-    bool isPaymentOptionSelected =
-        selectedPaymentOption.isNotEmpty;
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ElevatedButton(
-        onPressed: isAddressSelected && isPaymentOptionSelected
-            ? () {
-              if (selectedPaymentOption == 'Cash on Delivery') {
-                  // Handle Cash on Delivery logic
-                  _proceedWithCashOnDelivery();
-                } else {
-                  // Handle other payment options
-                  _proceedWithOtherPayment();
-                }
-            }
-            : null,
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white, backgroundColor: Colors.green,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 24.0,
-            vertical: 16.0,
-          ),
-          elevation: 4.0,
-        ),
-        child: const Text(
-          'Proceed to Buy',
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    );
-  }
 
   Widget _buildAddAddressTile(BuildContext context) {
     bool isNewAddressAdded = selectedAddress != null;
@@ -175,7 +139,7 @@ class _CartSummaryScreenState extends State<CartSummaryScreen> {
           Address? newAddress = await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddAddressScreen(),
+              builder: (context) => const AddAddressScreen(),
             ),
           );
 
@@ -356,6 +320,42 @@ class _CartSummaryScreenState extends State<CartSummaryScreen> {
       total += double.parse(item.productPrice) * item.quantity;
     }
     return total.toStringAsFixed(2);
+  }
+
+  Widget _buildProceedButton() {
+    bool isAddressSelected = selectedAddress != null;
+    bool isPaymentOptionSelected =
+        selectedPaymentOption.isNotEmpty;
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: ElevatedButton(
+        onPressed: isAddressSelected && isPaymentOptionSelected
+            ? () {
+              if (selectedPaymentOption == 'Cash on Delivery') {
+                  _proceedWithCashOnDelivery();
+                } else {
+                  _proceedWithOtherPayment();
+                }
+            }
+            : null,
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white, backgroundColor: Colors.green,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 24.0,
+            vertical: 16.0,
+          ),
+          elevation: 4.0,
+        ),
+        child: const Text(
+          'Proceed to Buy',
+          style: TextStyle(fontSize: 18),
+        ),
+      ),
+    );
   }
 }
 

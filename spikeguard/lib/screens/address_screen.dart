@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:spikeguard/shared/globals.dart';
 
 class AddAddressScreen extends StatefulWidget {
+  const AddAddressScreen({super.key});
+
   @override
   _AddAddressScreenState createState() => _AddAddressScreenState();
 }
@@ -97,7 +99,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 formData.deliveryInstructionsController,
                 maxLines: 4),
             _buildUseThisAddressButton(),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
           ],
         ),
       ),
@@ -172,7 +174,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         children: [
           Text(
             formData.isMandatory(label) ? '$label*' : label,
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
           ),
           Container(
             decoration: BoxDecoration(
@@ -224,7 +226,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           ),
           Text(
             formData.isMandatory(label) ? '$label*' : label,
-            style: TextStyle(fontSize: 14),
+            style: const TextStyle(fontSize: 14),
           ),
         ],
       ),

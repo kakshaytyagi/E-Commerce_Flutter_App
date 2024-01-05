@@ -13,7 +13,7 @@ class EmptyCartIllustration extends StatelessWidget {
           fit: BoxFit.cover,
         ),
         const SizedBox(height: 1),
-        Text(
+        const Text(
           'Your cart is empty!',
           style: TextStyle(
             fontSize: 20,
@@ -21,7 +21,7 @@ class EmptyCartIllustration extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Text(
+        const Text(
           'Explore our products and add items to your cart to proceed.',
           textAlign: TextAlign.center,
           style: TextStyle(

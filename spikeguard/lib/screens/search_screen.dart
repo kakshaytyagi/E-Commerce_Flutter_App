@@ -4,7 +4,7 @@ import 'package:spikeguard/screens/product_screen.dart';
 class SearchScreen extends StatefulWidget {
   final List<Map<String, dynamic>> productData;
 
-  SearchScreen({required this.productData});
+  const SearchScreen({super.key, required this.productData});
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -36,7 +36,7 @@ class _SearchScreenState extends State<SearchScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -45,7 +45,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -54,7 +54,7 @@ class _SearchScreenState extends State<SearchScreen> {
           padding: const EdgeInsets.only(left: 16.0),
           child: TextField(
             controller: searchController,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             decoration: const InputDecoration(
               hintText: "Search our products",
               hintStyle: TextStyle(color: Colors.white70),
@@ -83,7 +83,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: ListTile(
-                      contentPadding: EdgeInsets.all(16),
+                      contentPadding: const EdgeInsets.all(16),
                       leading: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image(
@@ -95,18 +95,18 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       title: Text(
                         product['productName'],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       subtitle: Text(
                         product['productInfo'],
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
                       trailing: Text(
                         '\$${product['productPrice']}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
@@ -121,6 +121,8 @@ class _SearchScreenState extends State<SearchScreen> {
                               productImage: product['productImage'],
                               productInfo: product['productInfo'],
                               productPrice: product['productPrice'],
+                              productDetails: product['productDetails'],
+                              customerReviews: product['customerReviews'],
                             ),
                           ),
                         );

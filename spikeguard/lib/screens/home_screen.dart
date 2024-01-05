@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spikeguard/screens/product_screen.dart';
 import 'package:spikeguard/shared/globals.dart';
-import 'package:spikeguard/widget/advertisment_slider.dart';
 import 'package:spikeguard/widget/bottom_navigation.dart';
+import 'dart:async';
 
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({Key? key}) : super(key: key);
@@ -13,6 +13,35 @@ class CatalogScreen extends StatefulWidget {
 
 class _CatalogScreenState extends State<CatalogScreen> {
   double? screenWidth;
+
+  late PageController _pageController;
+  int _currentPage = 0;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    _startAutoSlide();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _timer.cancel();
+    super.dispose();
+  }
+
+  void _startAutoSlide() {
+    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+      _currentPage = (_currentPage + 1) % 3;
+      _pageController.animateToPage(
+        _currentPage,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +79,31 @@ class _CatalogScreenState extends State<CatalogScreen> {
           ),
           SizedBox(
             height: screenWidth! / 2,
-            child: const CatalogSlider(),
+            child: PageView(
+              controller: _pageController,
+              onPageChanged: (int page) {
+                setState(() {
+                  _currentPage = page;
+                });
+              },
+              children: [
+                buildSliderPage(
+                  title: "Advance your \ncareer now",
+                  buttonText: "Catalog",
+                  imagePath: 'assets/product/stabilizer.png',
+                ),
+                buildSliderPage(
+                  title: "Explore new \nproducts",
+                  buttonText: "Shop Now",
+                  imagePath: 'assets/product/vmsd-500.png',
+                ),
+                buildSliderPage(
+                  title: "Check out our \nspecial deals",
+                  buttonText: "View Deals",
+                  imagePath: 'assets/product/stabilizer.png',
+                ),
+              ],
+            ),
           ),
           MyTheme.largeVerticalPadding,
           const Row(
@@ -76,12 +129,14 @@ class _CatalogScreenState extends State<CatalogScreen> {
                 productName: product['productName'],
                 productInfo: product['productInfo'],
                 productPrice: product['productPrice'],
+                productDetails: product['productDetails'],
+                customerReview: product['customerReviews'],
               );
             }).toList(),
           )
         ],
       ),
-      bottomNavigationBar: BottomNavBarCurvedFb1(),
+      bottomNavigationBar: const BottomNavBarCurvedFb1(),
     );
   }
 
@@ -90,6 +145,8 @@ class _CatalogScreenState extends State<CatalogScreen> {
     required String productName,
     required String productInfo,
     required String productPrice,
+    String? productDetails,
+    List<Map<String, dynamic>>? customerReview,
   }) {
     return GestureDetector(
       onTap: () {
@@ -101,6 +158,8 @@ class _CatalogScreenState extends State<CatalogScreen> {
               productImage: productImage,
               productInfo: productInfo,
               productPrice: productPrice,
+              productDetails: productDetails,
+              customerReviews: customerReview,
             ),
           ),
         );
@@ -155,6 +214,87 @@ class _CatalogScreenState extends State<CatalogScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildSliderPage({
+    required String title,
+    required String buttonText,
+    required String imagePath,
+  }) {
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        Column(
+          children: [
+            const Spacer(flex: 1),
+            Expanded(
+              flex: 3,
+              child: Card(
+                color: MyTheme.catalogueCardColor,
+                child: Container(
+                  width: double.infinity,
+                ),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: Column(
+                children: [
+                  const Spacer(
+                    flex: 1,
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16.0, 16.0, 0, 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(
+                            child: FittedBox(
+                              alignment: Alignment.centerLeft,
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                title,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: Text(
+                              buttonText,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Image(
+                alignment: Alignment.topCenter,
+                image: AssetImage(imagePath),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

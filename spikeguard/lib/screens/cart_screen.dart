@@ -9,6 +9,8 @@ class CartItem {
   final String productPrice;
   final AssetImage imageUrl;
   final String productInfo;
+  String? productDetails;
+  List<Map<String, dynamic>>? customerReview;
   int quantity;
 
   CartItem({
@@ -16,6 +18,8 @@ class CartItem {
     required this.productPrice,
     required this.imageUrl,
     required this.productInfo,
+    this.productDetails,
+    this.customerReview,
     this.quantity = 1,
   });
 }
@@ -133,8 +137,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
               );
             },
             style: ElevatedButton.styleFrom(
-              primary: const Color(0xFF5DA96F),
-              onPrimary: Colors.white,
+              foregroundColor: Colors.white, backgroundColor: const Color(0xFF5DA96F),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
               ),
@@ -155,7 +158,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   }
 
   Widget buildEmptyCartIllustration() {
-    return Center(
+    return const Center(
       child: EmptyCartIllustration(),
     );
   }
@@ -204,6 +207,8 @@ class _CartItemCardState extends State<CartItemCard> {
                 productImage: widget.cartItem.imageUrl,
                 productInfo: widget.cartItem.productInfo,
                 productPrice: widget.cartItem.productPrice,
+                productDetails: widget.cartItem.productDetails,
+                customerReviews: widget.cartItem.customerReview,
               ),
             ),
           );
@@ -303,7 +308,7 @@ class _CartItemCardState extends State<CartItemCard> {
                       setState(() {});
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
+                      backgroundColor: Colors.red,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),

@@ -35,7 +35,7 @@ class PurchaseHistoryScreen extends StatelessWidget {
           children: [
             Text(
               'Purchase Date: ${DateTime.now().toString()}',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             DataTable(
@@ -55,7 +55,7 @@ class PurchaseHistoryScreen extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               'Total Amount: ${_calculateTotalAmount(purchaseItems)}',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ],
         ),

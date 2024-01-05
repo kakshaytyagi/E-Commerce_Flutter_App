@@ -9,7 +9,7 @@ import 'package:spikeguard/widget/bottom_navigation.dart';
 class Routes {
   static final Map<String, WidgetBuilder> routes = {
     '/': (context) => const CatalogScreen(),
-    'company_info_screen': (context) =>  CompanyInfoScreen(),
+    'company_info_screen': (context) =>  const CompanyInfoScreen(),
     'search_screen': (context) => SearchScreen(productData: productData),
     'cart_screen': (context) => ProductListingScreen(shoppingCart: shoppingCart),
   };
