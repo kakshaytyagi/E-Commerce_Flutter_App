@@ -8,8 +8,8 @@ class EmptyCartIllustration extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.network(
-          "https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/Illustrations%20Icons%2FOpen%20Vault.png?alt=media&token=745a7f73-83c9-41f2-b5d4-04cd81fd0afe",
+        Image.asset(
+          'assets/add/Open Vault.png',
           fit: BoxFit.cover,
         ),
         const SizedBox(height: 1),
@@ -33,4 +33,3 @@ class EmptyCartIllustration extends StatelessWidget {
     );
   }
 }
-

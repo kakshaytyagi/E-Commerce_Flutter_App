@@ -4,6 +4,8 @@ import 'package:spikeguard/shared/globals.dart';
 import 'package:spikeguard/widget/bottom_navigation.dart';
 import 'dart:async';
 
+import 'package:spikeguard/widget/contact_info.dart';
+
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({Key? key}) : super(key: key);
 
@@ -54,7 +56,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
         children: [
           MyTheme.largeVerticalPadding,
           const Text(
-            "Hi, Daria!",
+            "Hi, there!",
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           MyTheme.mediumVerticalPadding,
@@ -95,25 +97,35 @@ class _CatalogScreenState extends State<CatalogScreen> {
                 buildSliderPage(
                   title: "Explore new \nproducts",
                   buttonText: "Shop Now",
-                  imagePath: 'assets/product/vmsd-500.png',
+                  imagePath: 'assets/product/wall-mount.png',
                 ),
                 buildSliderPage(
                   title: "Check out our \nspecial deals",
                   buttonText: "View Deals",
-                  imagePath: 'assets/product/stabilizer.png',
+                  imagePath: 'assets/product/phaseServo.png',
                 ),
               ],
             ),
           ),
           MyTheme.largeVerticalPadding,
-          const Row(
+          Row(
             children: [
-              Text(
-                "Trending products",
+              const Text(
+                "Our products",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              Spacer(),
-              Icon(Icons.tune)
+              const Spacer(),
+              IconButton(
+                icon: const Icon(Icons.info),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return ContactInfoDialog();
+                    },
+                  );
+                },
+              ),
             ],
           ),
           GridView.count(

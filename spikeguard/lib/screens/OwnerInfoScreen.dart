@@ -40,7 +40,7 @@ class OwnerInfoScreen extends StatelessWidget {
                   const CircleAvatar(
                     radius: 80.0,
                     backgroundImage: AssetImage(
-                        'assets/product/stabilizer.png'), // Replace with the actual image asset path
+                        'assets/add/owner.jpg'), // Replace with the actual image asset path
                   ),
 
                   const SizedBox(height: 16.0),

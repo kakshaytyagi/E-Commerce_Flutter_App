@@ -71,7 +71,6 @@ class _SearchScreenState extends State<SearchScreen> {
               itemCount: filteredProducts.length,
               itemBuilder: (context, index) {
                 final product = filteredProducts[index];
-
                 return Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16.0,

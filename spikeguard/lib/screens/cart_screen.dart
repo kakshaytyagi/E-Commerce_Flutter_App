@@ -18,8 +18,8 @@ class CartItem {
     required this.productPrice,
     required this.imageUrl,
     required this.productInfo,
-    this.productDetails,
-    this.customerReview,
+    required this.productDetails,
+    required this.customerReview,
     this.quantity = 1,
   });
 }
@@ -32,6 +32,11 @@ class ShoppingCart {
 
   void addItem(CartItem item) {
     cartItems.add(item);
+  }
+
+  void addBuyItem(CartItem item) {
+    print(item);
+    buyItems.add(item);
   }
 
   void removeItem(CartItem item) {
@@ -88,7 +93,6 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                 child: CartItemCard(
                   cartItem: cartItems[index],
                   onQuantityChanged: () {
-                    // Trigger a rebuild of the widget when quantity changes
                     setState(() {});
                   },
                   onRemove: () {
@@ -137,7 +141,8 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
               );
             },
             style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white, backgroundColor: const Color(0xFF5DA96F),
+              foregroundColor: Colors.white,
+              backgroundColor: const Color(0xFF5DA96F),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
               ),
@@ -198,7 +203,6 @@ class _CartItemCardState extends State<CartItemCard> {
       ),
       child: InkWell(
         onTap: () {
-          // Navigate to ProductScreen when the card is tapped
           Navigator.push(
             context,
             MaterialPageRoute(
