@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class OwnerInfoScreen extends StatelessWidget {
+  const OwnerInfoScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -9,7 +11,7 @@ class OwnerInfoScreen extends StatelessWidget {
       minChildSize: 0.85,
       builder: (context, scrollController) {
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white, // Set your preferred background color
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
@@ -32,18 +34,18 @@ class OwnerInfoScreen extends StatelessWidget {
                 children: [
                   // Owner Name
 
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
 
                   // Owner Image
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 80.0,
                     backgroundImage: AssetImage(
-                        'assets/product/stabilizer.png'), // Replace with the actual image asset path
+                        'assets/add/owner.jpg'), // Replace with the actual image asset path
                   ),
 
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
 
-                  Text(
+                  const Text(
                     'Gaurav Tyagi', // Replace with the actual owner's name
                     style: TextStyle(
                       fontSize: 22.0,
@@ -52,7 +54,7 @@ class OwnerInfoScreen extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
 
                   RichText(
                     text: const TextSpan(
@@ -79,16 +81,16 @@ class OwnerInfoScreen extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
 
                   // Stylish Divider
                   Container(
                     height: 1,
                     color: Colors.grey, // Set your preferred divider color
-                    margin: EdgeInsets.symmetric(vertical: 10),
+                    margin: const EdgeInsets.symmetric(vertical: 10),
                   ),
 
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
 
                   // Words of Wisdom from the Owner
                   RichText(

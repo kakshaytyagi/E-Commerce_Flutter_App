@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:spikeguard/screens/OwnerInfoScreen.dart';
 
 class CompanyInfoScreen extends StatelessWidget {
+  const CompanyInfoScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +17,7 @@ class CompanyInfoScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.person),
+            icon: const Icon(Icons.person),
             onPressed: () {
               
               // Show sliding panel with owner information
@@ -23,19 +25,21 @@ class CompanyInfoScreen extends StatelessWidget {
                 context: context,
                 isScrollControlled: true,
                 builder: (BuildContext context) {
-                  return OwnerInfoScreen();
+                  return const OwnerInfoScreen();
                 },
               );
             },
           ),
         ],
       ),
-      body: InstagramPostList(),
+      body: const InstagramPostList(),
     );
   }
 }
 
 class InstagramPostList extends StatelessWidget {
+  const InstagramPostList({super.key});
+
   @override
   Widget build(BuildContext context) {
     // Replace the following with actual data fetching logic
@@ -53,12 +57,12 @@ class InstagramPostList extends StatelessWidget {
 class InstagramPostCard extends StatelessWidget {
   final Post post;
 
-  InstagramPostCard({required this.post});
+  const InstagramPostCard({super.key, required this.post});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(12.0),
+      margin: const EdgeInsets.all(12.0),
       elevation: 4.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
@@ -67,7 +71,7 @@ class InstagramPostCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(15.0)),
             child: Image.asset(
               post.imageUrl,
               width: MediaQuery.of(context).size.width,
@@ -80,13 +84,13 @@ class InstagramPostCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${post.caption}',
-                  style: TextStyle(
+                  post.caption,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16.0,
                   ),
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 // Display comments here
                 // ...
               ],

@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:spikeguard/screens/cartsummary_screen.dart';
 import 'package:spikeguard/screens/product_screen.dart';
 import 'package:spikeguard/shared/globals.dart';
+import 'package:spikeguard/widget/empty_widged.dart';
 
 class CartItem {
   final String productName;
   final String productPrice;
   final AssetImage imageUrl;
   final String productInfo;
+  String? productDetails;
+  List<Map<String, dynamic>>? customerReview;
   int quantity;
 
   CartItem({
@@ -15,6 +18,8 @@ class CartItem {
     required this.productPrice,
     required this.imageUrl,
     required this.productInfo,
+    required this.productDetails,
+    required this.customerReview,
     this.quantity = 1,
   });
 }
@@ -27,6 +32,11 @@ class ShoppingCart {
 
   void addItem(CartItem item) {
     cartItems.add(item);
+  }
+
+  void addBuyItem(CartItem item) {
+    print(item);
+    buyItems.add(item);
   }
 
   void removeItem(CartItem item) {
@@ -65,88 +75,96 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       appBar: AppBar(
         title: const Text('Cart Items'),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: cartItems.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CartItemCard(
-                    cartItem: cartItems[index],
-                    onQuantityChanged: () {
-                      // Trigger a rebuild of the widget when quantity changes
-                      setState(() {});
-                    },
-                    onRemove: () {
-                      setState(() {});
-                      widget.shoppingCart.removeItem(cartItems[index]);
-                    },
-                  ),
-                );
-              },
-            ),
+      body: widget.shoppingCart.calculateTotalAmount() > 0.00
+          ? buildCartList()
+          : buildEmptyCartIllustration(),
+    );
+  }
+
+  Widget buildCartList() {
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            itemCount: cartItems.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CartItemCard(
+                  cartItem: cartItems[index],
+                  onQuantityChanged: () {
+                    setState(() {});
+                  },
+                  onRemove: () {
+                    setState(() {});
+                    widget.shoppingCart.removeItem(cartItems[index]);
+                  },
+                ),
+              );
+            },
           ),
-          // Total Amount section
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                const Text(
-                  'Total Amount:',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+        ),
+        // Total Amount section
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              const Text(
+                'Total Amount:',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
-                Text(
-                  '₹${widget.shoppingCart.calculateTotalAmount().toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green, // You can customize the color
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // Proceed to Buy button
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: widget.shoppingCart.calculateTotalAmount() > 0.00
-                  ? () {
-                      // Navigate to the cart summary screen with the current items in the cart
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              CartSummaryScreen(cartItems: cartItems),
-                        ),
-                      );
-                    }
-                  : null,
-              style: ElevatedButton.styleFrom(
-                primary: const Color(0xFF5DA96F),
-                onPrimary: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24.0,
-                  vertical: 16.0,
-                ),
-                elevation: 4.0,
               ),
-              child: const Text(
-                'Proceed to Buy',
-                style: TextStyle(fontSize: 18),
+              Text(
+                '₹${widget.shoppingCart.calculateTotalAmount().toStringAsFixed(2)}',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green, // You can customize the color
+                ),
               ),
+            ],
+          ),
+        ),
+        // Proceed to Buy button
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ElevatedButton(
+            onPressed: () {
+              // Navigate to the cart summary screen with the current items in the cart
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CartSummaryScreen(cartItems: cartItems),
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: const Color(0xFF5DA96F),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24.0,
+                vertical: 16.0,
+              ),
+              elevation: 4.0,
+            ),
+            child: const Text(
+              'Proceed to Buy',
+              style: TextStyle(fontSize: 18),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildEmptyCartIllustration() {
+    return const Center(
+      child: EmptyCartIllustration(),
     );
   }
 }
@@ -185,7 +203,6 @@ class _CartItemCardState extends State<CartItemCard> {
       ),
       child: InkWell(
         onTap: () {
-          // Navigate to ProductScreen when the card is tapped
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -194,6 +211,8 @@ class _CartItemCardState extends State<CartItemCard> {
                 productImage: widget.cartItem.imageUrl,
                 productInfo: widget.cartItem.productInfo,
                 productPrice: widget.cartItem.productPrice,
+                productDetails: widget.cartItem.productDetails,
+                customerReviews: widget.cartItem.customerReview,
               ),
             ),
           );
@@ -293,7 +312,7 @@ class _CartItemCardState extends State<CartItemCard> {
                       setState(() {});
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
+                      backgroundColor: Colors.red,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),

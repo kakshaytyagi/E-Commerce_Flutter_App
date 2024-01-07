@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:spikeguard/screens/cart_screen.dart';
 import 'package:spikeguard/shared/globals.dart';
@@ -8,6 +9,8 @@ class ProductScreen extends StatefulWidget {
   final AssetImage productImage;
   final String productInfo;
   final String productPrice;
+  final String? productDetails;
+  final List<Map<String, dynamic>>? customerReviews;
 
   const ProductScreen({
     Key? key,
@@ -15,6 +18,8 @@ class ProductScreen extends StatefulWidget {
     required this.productImage,
     required this.productInfo,
     required this.productPrice,
+    this.productDetails,
+    this.customerReviews,
   }) : super(key: key);
 
   @override
@@ -22,6 +27,8 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
+  List<CartItem> buyItems = []; // Add a list for buyItems
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +41,12 @@ class _ProductScreenState extends State<ProductScreen> {
           IconButton(
             icon: const Icon(Icons.shopping_cart),
             onPressed: () {
+              for (var buyItem in buyItems) {
+                if (!cartItems.any((cartItem) =>
+                    cartItem.productName == buyItem.productName)) {
+                  cartItems.add(buyItem);
+                }
+              }
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -128,11 +141,6 @@ class _ProductScreenState extends State<ProductScreen> {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      const Text(
-                        "Learn the basics of lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      const SizedBox(height: 16),
                       Row(
                         children: [
                           Expanded(
@@ -143,6 +151,8 @@ class _ProductScreenState extends State<ProductScreen> {
                                   productName: widget.productName,
                                   productPrice: widget.productPrice,
                                   productInfo: widget.productInfo,
+                                  productDetails: widget.productDetails,
+                                  customerReview: widget.customerReviews,
                                 ))) {
                                   setState(() {
                                     shoppingCart.addItem(CartItem(
@@ -150,6 +160,8 @@ class _ProductScreenState extends State<ProductScreen> {
                                       productName: widget.productName,
                                       productPrice: widget.productPrice,
                                       productInfo: widget.productInfo,
+                                      productDetails: widget.productDetails,
+                                      customerReview: widget.customerReviews,
                                     ));
                                   });
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -161,15 +173,16 @@ class _ProductScreenState extends State<ProductScreen> {
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                      content: Text('Item is already in the cart'),
+                                      content:
+                                          Text('Item is already in the cart'),
                                       backgroundColor: Colors.red,
                                     ),
                                   );
                                 }
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.blue,
-                                onPrimary: Colors.white,
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.blue,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
@@ -181,11 +194,30 @@ class _ProductScreenState extends State<ProductScreen> {
                           Expanded(
                             child: ElevatedButton(
                               onPressed: () {
-                                // TODO: Implement other actions or navigate to other screens
+                                buyItems.clear();
+                                buyItems.addAll(cartItems);
+                                cartItems.clear();
+
+                                shoppingCart.addItem(CartItem(
+                                  imageUrl: widget.productImage,
+                                  productName: widget.productName,
+                                  productPrice: widget.productPrice,
+                                  productInfo: widget.productInfo,
+                                  productDetails: widget.productDetails,
+                                  customerReview: widget.customerReviews,
+                                ));
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductListingScreen(
+                                        shoppingCart: shoppingCart),
+                                  ),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.orange,
-                                onPrimary: Colors.white,
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.orange,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
@@ -196,50 +228,27 @@ class _ProductScreenState extends State<ProductScreen> {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      Divider(
-                        color: Colors.grey[300],
-                        thickness: 1,
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        "Product Details",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                      if (widget.productDetails != null)
+                        buildSection(
+                          "Product Details",
+                          widget.productDetails!,
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey[600],
-                        ),
-                      ),
                       const SizedBox(height: 16),
                       Divider(
                         color: Colors.grey[300],
                         thickness: 1,
                       ),
                       const SizedBox(height: 16),
-                      const Text(
-                        "Customer Reviews",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                      if (widget.customerReviews != null)
+                        buildSection(
+                          "Customer Reviews",
+                          buildReviewsList(widget.customerReviews!),
                         ),
+                      const SizedBox(height: 16),
+                      Divider(
+                        color: Colors.grey[300],
+                        thickness: 1,
                       ),
-                      const SizedBox(height: 8),
-                      buildReviewItem(
-                        "John Doe",
-                        "Excellent product! It exceeded my expectations. Highly recommended.",
-                      ),
-                      const SizedBox(height: 8),
-                      buildReviewItem(
-                        "Jane Smith",
-                        "Great quality and fast delivery. I'm satisfied with my purchase.",
-                      ),
-                      // Add more reviews as needed
                     ],
                   ),
                 ),
@@ -251,7 +260,32 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  Widget buildReviewItem(String reviewerName, String reviewText) {
+  Widget buildSection(String title, dynamic content) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 8),
+        if (content is String)
+          Text(
+            content,
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[600],
+            ),
+          ),
+        if (content is Widget) content,
+      ],
+    );
+  }
+
+  Widget buildReviewItem(int rating, String reviewText) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
@@ -259,14 +293,48 @@ class _ProductScreenState extends State<ProductScreen> {
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: ListTile(
-        title: Text(
-          reviewerName,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
+        title: Row(
+          children: [
+            RatingBar.builder(
+              initialRating: rating.toDouble(),
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              itemSize: 18,
+              itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+              itemBuilder: (context, _) => const Icon(
+                Icons.star,
+                color: Colors.amber,
+              ),
+              onRatingUpdate: (double value) {
+                // You can handle rating updates if needed
+              },
+            ),
+          ],
+        ),
+        subtitle: Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Text(
+            reviewText,
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.black, // Set the appropriate text color
+            ),
           ),
         ),
-        subtitle: Text(reviewText),
       ),
+    );
+  }
+
+  Widget buildReviewsList(List<Map<String, dynamic>> reviews) {
+    return Column(
+      children: reviews.map((review) {
+        return buildReviewItem(
+          review['rating'] ?? 0,
+          review['comment'] ?? '',
+        );
+      }).toList(),
     );
   }
 
@@ -280,7 +348,7 @@ class _ProductScreenState extends State<ProductScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              const Text(
                 'Share this product',
                 style: TextStyle(
                   fontSize: 20,
@@ -294,7 +362,7 @@ class _ProductScreenState extends State<ProductScreen> {
               const SizedBox(height: 16),
               Text(
                 widget.productName,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -315,7 +383,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text(
+                    child: const Text(
                       'Cancel',
                       style: TextStyle(
                         color: Colors.red,
@@ -328,7 +396,7 @@ class _ProductScreenState extends State<ProductScreen> {
                       _shareProduct();
                       Navigator.pop(context);
                     },
-                    child: Text(
+                    child: const Text(
                       'Share',
                       style: TextStyle(
                         color: Colors.blue,

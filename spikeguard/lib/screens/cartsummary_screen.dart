@@ -108,37 +108,7 @@ class _CartSummaryScreenState extends State<CartSummaryScreen> {
     );
   }
 
-  Widget _buildProceedButton() {
-    bool isAddressSelected = selectedAddress != null;
-    bool isPaymentOptionSelected =
-        selectedPaymentOption.isNotEmpty;
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ElevatedButton(
-        onPressed: isAddressSelected && isPaymentOptionSelected
-            ? () {
-                // TODO: Implement logic to proceed with the purchase
-              }
-            : null,
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white, backgroundColor: Colors.green,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 24.0,
-            vertical: 16.0,
-          ),
-          elevation: 4.0,
-        ),
-        child: const Text(
-          'Proceed to Buy',
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    );
-  }
 
   Widget _buildAddAddressTile(BuildContext context) {
     bool isNewAddressAdded = selectedAddress != null;
@@ -169,7 +139,7 @@ class _CartSummaryScreenState extends State<CartSummaryScreen> {
           Address? newAddress = await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddAddressScreen(),
+              builder: (context) => const AddAddressScreen(),
             ),
           );
 
@@ -351,4 +321,57 @@ class _CartSummaryScreenState extends State<CartSummaryScreen> {
     }
     return total.toStringAsFixed(2);
   }
+
+  Widget _buildProceedButton() {
+    bool isAddressSelected = selectedAddress != null;
+    bool isPaymentOptionSelected =
+        selectedPaymentOption.isNotEmpty;
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: ElevatedButton(
+        onPressed: isAddressSelected && isPaymentOptionSelected
+            ? () {
+              if (selectedPaymentOption == 'Cash on Delivery') {
+                  _proceedWithCashOnDelivery();
+                } else {
+                  _proceedWithOtherPayment();
+                }
+            }
+            : null,
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white, backgroundColor: Colors.green,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 24.0,
+            vertical: 16.0,
+          ),
+          elevation: 4.0,
+        ),
+        child: const Text(
+          'Proceed to Buy',
+          style: TextStyle(fontSize: 18),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+void _proceedWithCashOnDelivery() {
+  // Implement logic for Cash on Delivery
+  // For example, show a confirmation dialog or navigate to a success screen
+}
+
+void _proceedWithOtherPayment() {
+  // Implement logic for other payment options
+  // For example, handle the selected payment app and proceed accordingly
+  // if (selectedPaymentOption == 'Other UPI Apps' &&
+  //     selectedPaymentApp.isNotEmpty) {
+  //   // Implement logic for other UPI apps
+  //   // You can show a confirmation dialog or navigate to a payment screen
+  // }
 }

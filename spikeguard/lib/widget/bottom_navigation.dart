@@ -13,9 +13,9 @@ class _BottomNavBarCurvedFb1State extends State<BottomNavBarCurvedFb1> {
     Size size = MediaQuery.of(context).size;
     double height = 56;
 
-    final primaryColor = Color(0xFF5DA96F);
-    final secondaryColor = Colors.black54;
-    final backgroundColor = const Color.fromARGB(255, 255, 255, 255);
+    const primaryColor = Color(0xFF5DA96F);
+    const secondaryColor = Colors.black54;
+    const backgroundColor = Color.fromARGB(255, 255, 255, 255);
 
     return BottomAppBar(
       color: Colors.transparent,
@@ -32,7 +32,13 @@ class _BottomNavBarCurvedFb1State extends State<BottomNavBarCurvedFb1> {
               backgroundColor: primaryColor,
               elevation: 0.1,
               onPressed: () {
-                Navigator.pushNamed(context, '/');
+                // Get the current route name
+                String? currentRoute = ModalRoute.of(context)?.settings.name;
+
+                if (currentRoute == '/') {
+                } else {
+                  Navigator.pushNamed(context, '/');
+                }
               },
               child: const Icon(Icons.home_outlined),
             ),
@@ -112,7 +118,7 @@ class BottomNavCurvePainter extends CustomPainter {
 
     path.arcToPoint(
       Offset(insetCurveEndX, insetRadius / 2),
-      radius: Radius.circular(10.0),
+      radius: const Radius.circular(10.0),
       clockwise: false,
     );
 
