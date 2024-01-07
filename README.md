@@ -39,20 +39,32 @@ Welcome to SpikeGuard, an innovative and user-friendly e-commerce app built usin
 
 ## Screenshots
 
+###Main Screens || Search Screen || Explore
+
 <div style="display: flex; justify-content: space-between;">
   <img src="screenshot/Screenshot_1.png" alt="Screenshot 1" width="30%">
+  <img src="screenshot/Screenshot_5.png" alt="Screenshot 5" width="30%">
+  <img src="screenshot/Screenshot_6.png" alt="Screenshot 6" width="30%">
+</div>
+
+###Product Screen || Cart Screen || Checkout Screen
+<div style="display: flex; justify-content: space-between;">
   <img src="screenshot/Screenshot_2.png" alt="Screenshot 2" width="30%">
   <img src="screenshot/Screenshot_3.png" alt="Screenshot 3" width="30%">
+  <img src="screenshot/Screenshot_4.png" alt="Screenshot 4" width="30%">
 </div>
+
+###Address || Payment Screen
 <div style="display: flex; justify-content: space-between;">
-  <img src="screenshot/Screenshot_4.png" alt="Screenshot 1" width="30%">
-  <img src="screenshot/Screenshot_5.png" alt="Screenshot 2" width="30%">
-  <img src="screenshot/Screenshot_6.png" alt="Screenshot 3" width="30%">
+  <img src="screenshot/Screenshot_8.png" alt="Screenshot 8" width="30%">
+  <img src="screenshot/Screenshot_9.png" alt="Screenshot 9" width="30%">
 </div>
+
+###Shair Screen || Contant Screen || Author Screen
 <div style="display: flex; justify-content: space-between;">
-  <img src="screenshot/Screenshot_7.png" alt="Screenshot 1" width="30%">
-  <img src="screenshot/Screenshot_8.png" alt="Screenshot 2" width="30%">
-  <img src="screenshot/Screenshot_9.png" alt="Screenshot 3" width="30%">
+  <img src="screenshot/Screenshot_11.png" alt="Screenshot 11" width="30%">
+  <img src="screenshot/Screenshot_10.png" alt="Screenshot 10" width="30%">
+  <img src="screenshot/Screenshot_7.png" alt="Screenshot 7" width="30%">
 </div>
 
 
