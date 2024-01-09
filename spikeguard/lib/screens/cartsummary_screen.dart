@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:spikeguard/Modes/purchase_history.dart';
 import 'package:spikeguard/screens/address_screen.dart';
 import 'package:spikeguard/screens/cart_screen.dart';
 import 'package:spikeguard/shared/globals.dart';
@@ -357,18 +359,53 @@ class _CartSummaryScreenState extends State<CartSummaryScreen> {
       ),
     );
   }
+  
+  void _proceedWithCashOnDelivery() {}
 }
 
 
 
-void _proceedWithCashOnDelivery() {
-  // Implement logic for Cash on Delivery
-  // For example, show a confirmation dialog or navigate to a success screen
-}
+//Implement logic for Cash on Delivery
+// void _proceedWithCashOnDelivery() async {
+//   // Create a PurchaseHistory object
+//   PurchaseHistory purchaseHistory = PurchaseHistory(
+//   items: cartItems.map((item) => {
+//     'productName': item.productName,
+//     'quantity': item.quantity,
+//     'price': double.parse(item.productPrice),
+//   }).toList(),
+//   totalAmount: double.parse(calculateTotalAmount()),
+//   purchaseDate: Timestamp.now(),
+//   orderCompleted: false,
+//   userId: 'user123', // Replace with the actual user ID
+//   orderId: 'order123', // Replace with the actual order ID or generate one
+// );
 
-void _proceedWithOtherPayment() {
-  // Implement logic for other payment options
-  // For example, handle the selected payment app and proceed accordingly
+
+//   try {
+//     // Store the purchase history in Firebase Firestore
+//     await FirebaseFirestore.instance.collection('purchaseHistory').add({
+//       'userId': purchaseHistory.userId,
+//       'items': purchaseHistory.items,
+//       'totalAmount': purchaseHistory.totalAmount,
+//       'purchaseDate': purchaseHistory.purchaseDate,
+//       'orderCompleted': purchaseHistory.orderCompleted,
+//     });
+
+//     // Show success dialog or navigate to a success screen
+//     _showSuccessDialog();
+//   } catch (e) {
+//     // Handle error (show error message, log, etc.)
+//     print('Error storing purchase history: $e');
+//     // You can show an error dialog or handle it in another way
+//   }
+// }
+
+
+//Implement logic for other payment options
+void _proceedWithOtherPayment(){
+  //Implement logic for other payment options
+  //For example, handle the selected payment app and proceed accordingly
   // if (selectedPaymentOption == 'Other UPI Apps' &&
   //     selectedPaymentApp.isNotEmpty) {
   //   // Implement logic for other UPI apps
